@@ -22,7 +22,6 @@ public class Aniversariante {
     //Criado o campo ppe (pessoa politicamente exposta) para fazer sentido o uso do DTO para ser ocultado.
 
 
-
     public Aniversariante(Long id, String nome, LocalDate dataNascimento) {
         this.id = id;
         this.nome=nome;

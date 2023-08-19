@@ -1,7 +1,7 @@
 package com.ada.aniversario.controller;
 
 import com.ada.aniversario.dto.AniversarianteInputDTO;
-import com.ada.aniversario.dto.AniversarianteRespostaDto;
+import com.ada.aniversario.dto.AniversarianteOutputDto;
 import com.ada.aniversario.entity.Aniversariante;
 import com.ada.aniversario.service.AniversarianteService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,9 +37,9 @@ public class AniversarianteController {
 
     @Operation(summary = "Cadastrar aniversariante", description = "Endpoint para cadastrar um aniversariante")
     @PostMapping(value = "/add")
-    public ResponseEntity<AniversarianteRespostaDto> salvar(@RequestBody AniversarianteInputDTO dto) {
+    public ResponseEntity<AniversarianteOutputDto> salvar(@RequestBody AniversarianteInputDTO dto) {
         Aniversariante aniversariante = aniversarianteService.salvar(dto.transformaParaObjeto());
-        return new ResponseEntity<>(AniversarianteRespostaDto.transformaEmDTO(aniversariante), CREATED);
+        return new ResponseEntity<>(AniversarianteOutputDto.transformaEmDTO(aniversariante), CREATED);
     }
     @Operation(summary = "Consultar id COM ppe", description = "Endpoint para consultar id com o campo Pessoa Politicamente Exposta ")
     @GetMapping("/{id}")

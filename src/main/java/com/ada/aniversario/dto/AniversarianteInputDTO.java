@@ -1,16 +1,16 @@
 package com.ada.aniversario.dto;
 
 import com.ada.aniversario.entity.Aniversariante;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
 @Data
-@Builder
 @AllArgsConstructor
 public class AniversarianteInputDTO {
     private Long id;
@@ -20,7 +20,7 @@ public class AniversarianteInputDTO {
     public AniversarianteInputDTO(Aniversariante aniversariante) {
     }
 
-    public Aniversariante transformaParaObjeto(){
+    public Aniversariante transformaParaObjeto() {
         return new Aniversariante(id, nome, data_nascimento);
     }
 

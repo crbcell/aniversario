@@ -1,7 +1,7 @@
 package com.ada.aniversario.service;
 
 import com.ada.aniversario.dto.AniversarianteInputDTO;
-import com.ada.aniversario.dto.AniversarianteRespostaDto;
+import com.ada.aniversario.dto.AniversarianteOutputDto;
 import com.ada.aniversario.entity.Aniversariante;
 import com.ada.aniversario.exception.AniversarianteNaoEncontradoException;
 import com.ada.aniversario.repository.AniversarianteRepository;
@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,9 +25,9 @@ public class AniversarianteService {
         this.aniversarianteRepository = aniversarianteRepository;
     }
 
-    public static AniversarianteRespostaDto transformaEmDTO(Aniversariante aniversariante) {
-        return new AniversarianteRespostaDto(aniversariante.getId(), aniversariante.getNome(), aniversariante.getData_nascimento());
-    }
+    /*public static AniversarianteOutputDto transformaEmDTO(Aniversariante aniversariante) {
+        return new AniversarianteOutputDto(aniversariante.getId(), aniversariante.getNome(), aniversariante.getData_nascimento());
+    }*/
 
     private AniversarianteInputDTO convertAniversarianteDto(Aniversariante aniversariante) {
         AniversarianteInputDTO aniversarianteInputDTO = new AniversarianteInputDTO();
