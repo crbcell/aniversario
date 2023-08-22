@@ -1,7 +1,6 @@
 package com.ada.aniversario.service;
 
 import com.ada.aniversario.dto.AniversarianteInputDTO;
-import com.ada.aniversario.dto.AniversarianteOutputDto;
 import com.ada.aniversario.entity.Aniversariante;
 import com.ada.aniversario.exception.AniversarianteNaoEncontradoException;
 import com.ada.aniversario.repository.AniversarianteRepository;
@@ -84,7 +83,7 @@ public class AniversarianteService {
         return Period.between(nascimento, currentDate).getYears();
     }
 
-    public boolean isLeapYear(LocalDate nascimento){
+    public boolean isLeapYear(LocalDate nascimento) {
         boolean isLeapYear = nascimento.isLeapYear();  //true or false
         return isLeapYear;
     }

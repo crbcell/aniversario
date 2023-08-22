@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,24 +30,25 @@ public class AniversarianteController {
         this.aniversarianteService = aniversarianteService;
     }
 
-    @Operation(summary = "Lista completa sem ppe", description = "Endpoint para consultar lista o campo Pessoa Politicamente Exposta ")
+    @Operation(summary = "Cadastrar aniversariante", description = "Endpoint para cadastrar um aniversariante")
+    @PostMapping(value = "/add")
+    public ResponseEntity<AniversarianteOutputDto> salvar(@Valid @RequestBody AniversarianteInputDTO dto) {
+        Aniversariante aniversariante = aniversarianteService.salvar(dto.transformaParaObjeto());
+        return new ResponseEntity<>(AniversarianteOutputDto.transformaEmDTO(aniversariante), CREATED);
+    }
+
+    @Operation(summary = "Lista completa sem ppe", description = "Endpoint para consultar lista o campo Pessoa Politicamente Exposta")
     @GetMapping(value = "/lista", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AniversarianteInputDTO> getAllAniversariantes() {
         return aniversarianteService.getAllAniversariantes();
     }
 
-    @Operation(summary = "Cadastrar aniversariante", description = "Endpoint para cadastrar um aniversariante")
-    @PostMapping(value = "/add")
-    public ResponseEntity<AniversarianteOutputDto> salvar(@RequestBody AniversarianteInputDTO dto) {
-        Aniversariante aniversariante = aniversarianteService.salvar(dto.transformaParaObjeto());
-        return new ResponseEntity<>(AniversarianteOutputDto.transformaEmDTO(aniversariante), CREATED);
-    }
-    @Operation(summary = "Consultar id COM ppe", description = "Endpoint para consultar id com o campo Pessoa Politicamente Exposta ")
+    @Operation(summary = "Consultar id COM ppe", description = "Endpoint para consultar id com o campo Pessoa Politicamente Exposta")
     @GetMapping("/{id}")
     public ResponseEntity<Aniversariante> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(this.aniversarianteService.buscarPorId(id));
     }
-    @Operation(summary = "Consultar id SEM ppe", description = "Endpoint para consultar id sem o campo Pessoa Politicamente Exposta ")
+    @Operation(summary = "Consultar id SEM ppe", description = "Endpoint para consultar id sem o campo Pessoa Politicamente Exposta")
     @GetMapping(value = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AniversarianteInputDTO> getAniversarianteById(@PathVariable Long id) {
         return aniversarianteService.findById(id);
@@ -61,7 +63,7 @@ public class AniversarianteController {
     @Operation(summary = "Consultar idade", description = "Endpoint para consultar a idade a partir de um id")
     @GetMapping(value = "/idade/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String idadeDaPessoa(@PathVariable Long id) throws JsonProcessingException {
-        Map<String, Object> object = new HashMap<>();
+        Map<String, Object> object =  new HashMap<>();
         object.put("idade", this.aniversarianteService
                 .calculateAge(aniversarianteService
                         .buscarPorId(id)
