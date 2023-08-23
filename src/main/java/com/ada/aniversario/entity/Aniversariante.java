@@ -1,7 +1,8 @@
 package com.ada.aniversario.entity;
 
-import com.ada.aniversario.dto.AniversarianteInputDTO;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -22,9 +23,9 @@ public class Aniversariante {
     //Criado o campo ppe (pessoa politicamente exposta) para fazer sentido o uso do DTO para ser ocultado.
 
 
-    public Aniversariante(Long id, String nome, LocalDate dataNascimento) {
+    public Aniversariante(Long id, String nome, LocalDate data_nascimento) {
         this.id = id;
-        this.nome=nome;
-        this.data_nascimento=dataNascimento;
+        this.nome = nome;
+        this.data_nascimento = data_nascimento;
     }
 }

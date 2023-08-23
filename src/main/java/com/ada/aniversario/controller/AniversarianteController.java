@@ -32,53 +32,59 @@ public class AniversarianteController {
 
     @Operation(summary = "Cadastrar aniversariante", description = "Endpoint para cadastrar um aniversariante")
     @PostMapping(value = "/add")
-    public ResponseEntity<AniversarianteOutputDto> salvar(@Valid @RequestBody AniversarianteInputDTO dto) {
-        Aniversariante aniversariante = aniversarianteService.salvar(dto.transformaParaObjeto());
+    public ResponseEntity<AniversarianteOutputDto> createBirthdayPerson(@Valid @RequestBody AniversarianteInputDTO dto) {
+        Aniversariante aniversariante = aniversarianteService.save(dto.transformaParaObjeto());
         return new ResponseEntity<>(AniversarianteOutputDto.transformaEmDTO(aniversariante), CREATED);
     }
 
     @Operation(summary = "Lista completa sem ppe", description = "Endpoint para consultar lista o campo Pessoa Politicamente Exposta")
     @GetMapping(value = "/lista", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AniversarianteInputDTO> getAllAniversariantes() {
+    public List<AniversarianteInputDTO> getAllBirthdays() {
         return aniversarianteService.getAllAniversariantes();
     }
 
     @Operation(summary = "Consultar id COM ppe", description = "Endpoint para consultar id com o campo Pessoa Politicamente Exposta")
     @GetMapping("/{id}")
-    public ResponseEntity<Aniversariante> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(this.aniversarianteService.buscarPorId(id));
+    public ResponseEntity<Aniversariante> searchById(@PathVariable Long id) {
+        return ResponseEntity.ok(this.aniversarianteService.searchById(id));
     }
+
     @Operation(summary = "Consultar id SEM ppe", description = "Endpoint para consultar id sem o campo Pessoa Politicamente Exposta")
     @GetMapping(value = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AniversarianteInputDTO> getAniversarianteById(@PathVariable Long id) {
+    public List<AniversarianteInputDTO> getBirthdayById(@PathVariable Long id) {
         return aniversarianteService.findById(id);
     }
 
     @Operation(summary = "Consultar por parte do nome", description = "Endpoint para consultar aniversariante por parte do nome")
     @GetMapping(value = "/nome/{nome}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AniversarianteInputDTO> getAniversarianteByNamePart(@PathVariable String nome) {
-        return aniversarianteService.buscaPorParteDoNome(nome);
+    public List<AniversarianteInputDTO> getBirthdayByPartOfName(@PathVariable String nome) {
+        return aniversarianteService.searchToPartOfName(nome);
     }
 
     @Operation(summary = "Consultar idade", description = "Endpoint para consultar a idade a partir de um id")
     @GetMapping(value = "/idade/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String idadeDaPessoa(@PathVariable Long id) throws JsonProcessingException {
-        Map<String, Object> object =  new HashMap<>();
+    public String personAge(@PathVariable Long id) throws JsonProcessingException {
+        Map<String, Object> object = new HashMap<>();
         object.put("idade", this.aniversarianteService
                 .calculateAge(aniversarianteService
-                        .buscarPorId(id)
-                        .getData_nascimento()));
+                        .searchById(id)
+                        .getData_nascimento()
+                )
+        );
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(object);
     }
 
     @Operation(summary = "Verificar ano bissexto", description = "Endpoint para consultar se o ano de nascimento é bissexto")
     @GetMapping(value = "/ano/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String anoBissexto(@PathVariable Long id) throws JsonProcessingException {
+    public String leapYear(@PathVariable Long id) throws JsonProcessingException {
         Map<String, Object> object = new HashMap<>();
-        object.put("bissexto", this.aniversarianteService.isLeapYear(aniversarianteService
-                .buscarPorId(id)
-                .getData_nascimento()));
+        object.put("bissexto", this.aniversarianteService
+                .isLeapYear(aniversarianteService
+                        .searchById(id)
+                        .getData_nascimento()
+                )
+        );
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(object);
     }

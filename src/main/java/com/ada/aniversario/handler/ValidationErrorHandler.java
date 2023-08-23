@@ -22,3 +22,11 @@ public class ValidationErrorHandler {
         return validationErrors;
     }
 }
+
+/*RestControllerAdvice.
+Spring 3.2 traz suporte para um @ExceptionHandler global, com a anotação @ControllerAdvice.
+A anotação @ControllerAdvice nos permite consolidar nossos múltiplos @ExceptionHandlers,
+espalhados antes em um único componente global de tratamento de erros.
+@RestControllerAdvice é apenas um facilitador para você não ter que colocar @ControllerAdvice + @ResponseBody
+*/
+

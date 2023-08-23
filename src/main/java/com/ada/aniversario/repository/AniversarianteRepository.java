@@ -10,7 +10,7 @@ public interface AniversarianteRepository extends JpaRepository<Aniversariante, 
     //List<Aniversariante> findByPart(@Param("c") int c);
 
     List<Aniversariante> findByNomeContaining(String nome);
-   /* @Query(value = "SELECT * FROM tb_aniversariantes WHERE data_nascimento > ?1 AND date <= ?2", nativeQuery = true)
+   /* @Query(value = "SELECT * FROM tb_aniversariantes WHERE data_nascimento > ?1 AND data_nascimento <= ?2", nativeQuery = true)
     List<Statement> findAllByDate(LocalDate startDate, LocalDate endDate);*/
 
 }

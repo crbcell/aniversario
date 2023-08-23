@@ -57,7 +57,7 @@ public class AniversarianteService {
                 .collect(Collectors.toList());
     }
 
-    public List<AniversarianteInputDTO> buscaPorParteDoNome(String nome) {
+    public List<AniversarianteInputDTO> searchToPartOfName(String nome) {
         return aniversarianteRepository
                 .findByNomeContaining(nome)
                 .stream()
@@ -65,16 +65,16 @@ public class AniversarianteService {
                 .collect(Collectors.toList());
     }
 
-    public List<AniversarianteInputDTO> listaAniversariantes() {
+    public List<AniversarianteInputDTO> birthdayList() {
         return aniversarianteRepository.findAll().stream().map(AniversarianteInputDTO::new).collect(Collectors.toList());
         //exemplo de metodo que nao funciona sem convertAniversarianteDto
     }
 
-    public Aniversariante buscarPorId(Long id) {
+    public Aniversariante searchById(Long id) {
         return aniversarianteRepository.findById(id).get();
     }
 
-    public Aniversariante salvar(Aniversariante aniversariante) {
+    public Aniversariante save(Aniversariante aniversariante) {
         return aniversarianteRepository.save(aniversariante);
     }
 
@@ -84,8 +84,16 @@ public class AniversarianteService {
     }
 
     public boolean isLeapYear(LocalDate nascimento) {
-        boolean isLeapYear = nascimento.isLeapYear();  //true or false
-        return isLeapYear;
+        return nascimento.isLeapYear();//true or false
     }
+
+    /*private String getMapMapString(String key, Long id) throws JsonProcessingException {
+        Map<String, Object> object = new HashMap<>();
+        object.put(key, this
+                .calculateAge(searchById(id)
+                        .getData_nascimento()));
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(object);
+    }*/
 
 }
